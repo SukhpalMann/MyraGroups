@@ -1,57 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
 <title>Group Trip Card</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
 :root{
-  --ground:#EEF1EC; --paper:#FFFFFF; --ink:#13241F; --ink-2:#4A5A54; --line:#D5DDD7;
-  --forest:#1D4A3E; --forest-soft:#E3EEE9; --marigold:#E4A11B; --marigold-soft:#FBF0D6;
-  --sky:#2F6F95; --sky-soft:#E1EDF4; --ok:#1F8A4C; --ok-soft:#DFF2E6; --warn:#B7700B; --warn-soft:#FBEBD0;
-  --bad:#C2413A; --bad-soft:#F8E1DF; --shadow:0 18px 40px rgba(19,36,31,.14);
+  color-scheme:light;
+  --ground:#FFFFFF; --paper:#FFFFFF; --ink:#1B1D2E; --ink-2:#5B6072; --line:#E2E5EC;
+  --forest:#4353DE; --forest-soft:#E8EAFA; --marigold:#C98A1E; --marigold-soft:#FBEACB;
+  --sky:#2F6F95; --sky-soft:#DDEBF6; --bubble:#F5F6F8; --ok:#4353DE; --ok-soft:#E8EAFA; --warn:#C98A1E; --warn-soft:#FBEACB;
+  --bad:#C9433C; --bad-soft:#F6D9D7; --shadow:0 18px 40px rgba(10,34,61,.14);
+  --cta:#4353DE;
+  --myra:linear-gradient(90deg,#5AA9F2 0%,#7FE39A 50%,#F3EC4C 100%);
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  --serif:"Libre Baskerville", Georgia, serif;
   --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme:dark;
-    --ground:#0F1714; --paper:#17221E; --ink:#E6EEEA; --ink-2:#A3B3AC; --line:#2C3A35;
-    --forest:#7CC3A9; --forest-soft:#1E332C; --marigold:#F0B63F; --marigold-soft:#3A2F14;
-    --sky:#7DB6D8; --sky-soft:#18303D; --ok:#5BC98A; --ok-soft:#173226; --warn:#F0B35A; --warn-soft:#3A2A12;
-    --bad:#EE7B73; --bad-soft:#3B1F1D; --shadow:0 18px 40px rgba(0,0,0,.45);
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme:dark;
-  --ground:#0F1714; --paper:#17221E; --ink:#E6EEEA; --ink-2:#A3B3AC; --line:#2C3A35;
-  --forest:#7CC3A9; --forest-soft:#1E332C; --marigold:#F0B63F; --marigold-soft:#3A2F14;
-  --sky:#7DB6D8; --sky-soft:#18303D; --ok:#5BC98A; --ok-soft:#173226; --warn:#F0B35A; --warn-soft:#3A2A12;
-  --bad:#EE7B73; --bad-soft:#3B1F1D; --shadow:0 18px 40px rgba(0,0,0,.45);
 }
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:20px 40px}
 .top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:18px}
 .brand{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.02em;margin:0;text-wrap:balance}
-.brand span{color:var(--marigold)}
+.brand{color:var(--ink)}
+.brand span{color:var(--forest)}
 .tag{font-size:13px;color:var(--ink-2)}
 .stage{display:grid;grid-template-columns:minmax(0,410px) minmax(0,1fr);gap:28px;align-items:start}
 @media (max-width:860px){.stage{grid-template-columns:minmax(0,1fr)}}
 .phone{background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden;max-width:410px;width:100%}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:var(--forest);color:#fff}
-:root[data-theme="dark"] .bar{color:#0F1714}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bar{color:#0F1714}}
 .bar b{font-family:var(--display);font-size:17px;font-weight:700}
 .bar small{opacity:.85;font-size:12px}
 .screen{padding:16px;display:flex;flex-direction:column;gap:14px;min-height:560px}
-h2{font-family:var(--display);font-size:20px;line-height:1.2;margin:0;text-wrap:balance}
-h3{font-family:var(--display);font-size:16px;margin:0}
+h2{color:var(--ink);font-family:var(--display);font-size:20px;line-height:1.2;margin:0;text-wrap:balance}
+h3{color:var(--ink);font-family:var(--display);font-size:16px;margin:0}
 p{margin:0}
 .muted{color:var(--ink-2);font-size:13px}
 .eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
 .card{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--paper)}
 .reel{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center}
-.thumb{width:64px;height:84px;border-radius:10px;background:linear-gradient(160deg,#2E6B57,#9CC9B4 55%,#F2D08A);position:relative;overflow:hidden}
+.thumb{width:64px;height:84px;border-radius:10px;background:linear-gradient(160deg,#065AF3,#3BD7A5 60%,#F6E05E);position:relative;overflow:hidden}
 .thumb::after{content:"";position:absolute;left:24px;top:32px;border-left:16px solid rgba(255,255,255,.9);border-top:10px solid transparent;border-bottom:10px solid transparent}
 .checks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .chk{border-radius:10px;padding:8px 6px;text-align:center;background:var(--forest-soft)}
@@ -67,15 +56,13 @@ p{margin:0}
 .plan > span.muted{display:block}
 .plan > span.pill{width:auto;align-self:flex-start;display:inline-flex}
 .plan:hover{border-color:var(--forest)}
-.plan.sel{border-color:var(--marigold);box-shadow:0 0 0 3px var(--marigold-soft)}
+.plan.sel{border-color:var(--forest);box-shadow:0 0 0 3px var(--forest-soft)}
 .plan .price{font-family:var(--display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
 .who{display:flex;flex-wrap:wrap;gap:4px}
-button,.btn{font:inherit;font-weight:600;border-radius:12px;border:1.5px solid var(--forest);background:var(--forest);color:#fff;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-:root[data-theme="dark"] button:not(.ghost):not(.plan):not(.day):not(.seg),:root[data-theme="dark"] .btn:not(.ghost){color:#0F1714}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button:not(.ghost):not(.plan):not(.day):not(.seg),:root:not([data-theme="light"]) .btn:not(.ghost){color:#0F1714}}
-button.ghost,.btn.ghost{background:transparent;color:var(--forest)}
-button.small,.btn.small{padding:6px 10px;font-size:13px;border-radius:10px}
-button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.plan:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+button,.btn{font:inherit;font-weight:700;border-radius:10px;border:1.5px solid transparent;background:var(--cta);color:#fff;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+button.ghost,.btn.ghost{background:var(--paper);color:var(--ink);border-color:#9AA0AE}
+button.small,.btn.small{padding:6px 10px;font-size:13px;border-radius:9px}
+button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.plan:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
 button[disabled]{opacity:.45;cursor:not-allowed}
 label{font-size:13px;font-weight:600;display:flex;flex-direction:column;gap:4px}
 input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;width:100%}
@@ -87,7 +74,7 @@ textarea{min-height:64px;resize:vertical}
 .day.l{background:var(--warn-soft);border-color:var(--warn)}
 .day.x{background:var(--bad-soft);border-color:var(--bad);text-decoration:line-through}
 .day.hol::after{content:"";position:absolute;top:3px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--sky)}
-.day.inplan{outline:2px solid var(--marigold);outline-offset:1px}
+.day.inplan{outline:2px solid var(--sky);outline-offset:1px}
 .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--ink-2)}
 .sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px;border:1px solid var(--line)}
 .seg{border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:7px 10px;font-weight:600;font-size:13px}
@@ -95,7 +82,7 @@ textarea{min-height:64px;resize:vertical}
 .code{font-family:var(--mono);font-size:11.5px;word-break:break-all;background:var(--ground);border-radius:10px;padding:10px;border:1px dashed var(--line)}
 .steps{display:flex;gap:4px;padding:10px 16px 0;flex-wrap:wrap}
 .step{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);padding:3px 8px;border-radius:999px;background:var(--ground)}
-.step.on{background:var(--marigold-soft);color:var(--warn)}
+.step.on{background:var(--warn-soft);color:var(--warn)}
 .member{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .member:last-child{border-bottom:0}
 .notes{display:flex;flex-direction:column;gap:16px}
@@ -103,7 +90,7 @@ textarea{min-height:64px;resize:vertical}
 .note h3{font-size:18px}
 .note ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
 .force{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.force div{border-radius:12px;padding:10px;background:var(--ground);font-size:13px}
+.force div{border-radius:12px;padding:10px;background:var(--bubble);font-size:13px}
 .force b{display:block;font-family:var(--display);font-size:14px}
 .tbl{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 .tbl td,.tbl th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
@@ -117,8 +104,8 @@ footer{margin-top:28px;font-size:12.5px;color:var(--ink-2);max-width:900px}
 
 <div class="wrap">
   <div class="top">
-    <h1 class="brand">Group Trip <span>Card</span></h1>
-    <p class="tag">A Myra Groups concept prototype. Share a reel, gather everyone's constraints privately, get three workable plans.</p>
+    <h1 class="brand">Group Trip Card <span>Myra Groups</span></h1>
+    <p class="tag">Concept prototype. Share a reel, gather everyone's constraints privately, get three workable plans.</p>
   </div>
   <div class="stage">
     <section class="phone" aria-live="polite">
@@ -442,7 +429,7 @@ function renderBoard(){
       <div class="chk ${selPlan && st.yes>=T.quorum?"ok":"warn"}"><span class="v">${st.yes}/${T.quorum}</span><span class="k">Said I'm in</span></div>
       <div class="chk ${S.held?"ok":"warn"}"><span class="v">${S.held?"Yes":"No"}</span><span class="k">Held</span></div>
     </div>
-    ${st.conflict!=="None" ? `<p class="pill bad" style="align-self:flex-start">${esc(st.conflict)}${T.pref!=null?" (your first idea)":""}</p>` : ""}
+    ${st.conflict!=="None" ? `<p class="pill bad" style="align-self:flex-start">${esc(st.conflict)}${T.pref!=null?" ("+esc(T.owner)+"'s first idea)":""}</p>` : ""}
     ${silent.length ? `<div class="card"><h3>Waiting on ${silent.map(esc).join(", ")}</h3><p class="muted">A reminder fixes silence. It can't fix a clash, so plans below work around clashes instead.</p>
       <div class="row">${silent.map(n => `<button class="small ghost" data-nudge="${esc(n)}" ${S.nudged[n]?"disabled":""}>${S.nudged[n]?"Reminded today":"Remind "+esc(n)}</button>`).join("")}</div></div>` : ""}
     <h2>${plans.length ? "Three plans that work" : "Waiting for replies"}</h2>
@@ -485,7 +472,7 @@ function renderCommit(){
       return `<div class="member"><span><b>${esc(n)}</b> <span class="muted">${fits ? "fits these dates" : S.resp[n] ? "clashes with these dates" : "no reply yet"}</span></span>
       <span class="row"><button class="small ${c==="in"?"":"ghost"}" data-c="${esc(n)}" data-v="in">I'm in</button><button class="small ${c==="out"?"":"ghost"}" data-c="${esc(n)}" data-v="out">I'm out</button></span></div>`; }).join("")}</div>
     <div class="${locked ? "lock" : "card"}"><b>${yes} of ${T.quorum} needed said I'm in</b><span class="muted">${locked ? "Quorum met. The plan is locked; hold it before prices move." : "The plan locks when " + T.quorum + " people say yes."}</span></div>
-    <button id="toHold" ${locked?"":"disabled"}>Hold this plan</button>
+    <button id="toHold" ${locked?"":"disabled"}>Authorise eligible hold</button>
     <button class="ghost small" id="back">Back to plans</button>`;
   document.querySelectorAll("[data-c]").forEach(bn => bn.onclick = () => { const n = bn.dataset.c, v = bn.dataset.v; S.commits[n] = v; log("commit", n + " " + v); save(); renderCommit(); notes(); });
   $("#toHold").onclick = () => { S.view = "hold"; save(); render(); notes(); };
@@ -567,3 +554,5 @@ function boot(){
 boot();
 })();
 </script>
+
+</body></html>
