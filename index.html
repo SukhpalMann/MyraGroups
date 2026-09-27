@@ -1,0 +1,569 @@
+<title>Group Trip Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --ground:#EEF1EC; --paper:#FFFFFF; --ink:#13241F; --ink-2:#4A5A54; --line:#D5DDD7;
+  --forest:#1D4A3E; --forest-soft:#E3EEE9; --marigold:#E4A11B; --marigold-soft:#FBF0D6;
+  --sky:#2F6F95; --sky-soft:#E1EDF4; --ok:#1F8A4C; --ok-soft:#DFF2E6; --warn:#B7700B; --warn-soft:#FBEBD0;
+  --bad:#C2413A; --bad-soft:#F8E1DF; --shadow:0 18px 40px rgba(19,36,31,.14);
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0F1714; --paper:#17221E; --ink:#E6EEEA; --ink-2:#A3B3AC; --line:#2C3A35;
+    --forest:#7CC3A9; --forest-soft:#1E332C; --marigold:#F0B63F; --marigold-soft:#3A2F14;
+    --sky:#7DB6D8; --sky-soft:#18303D; --ok:#5BC98A; --ok-soft:#173226; --warn:#F0B35A; --warn-soft:#3A2A12;
+    --bad:#EE7B73; --bad-soft:#3B1F1D; --shadow:0 18px 40px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0F1714; --paper:#17221E; --ink:#E6EEEA; --ink-2:#A3B3AC; --line:#2C3A35;
+  --forest:#7CC3A9; --forest-soft:#1E332C; --marigold:#F0B63F; --marigold-soft:#3A2F14;
+  --sky:#7DB6D8; --sky-soft:#18303D; --ok:#5BC98A; --ok-soft:#173226; --warn:#F0B35A; --warn-soft:#3A2A12;
+  --bad:#EE7B73; --bad-soft:#3B1F1D; --shadow:0 18px 40px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:20px 40px}
+.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:18px}
+.brand{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.brand span{color:var(--marigold)}
+.tag{font-size:13px;color:var(--ink-2)}
+.stage{display:grid;grid-template-columns:minmax(0,410px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.stage{grid-template-columns:minmax(0,1fr)}}
+.phone{background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden;max-width:410px;width:100%}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;background:var(--forest);color:#fff}
+:root[data-theme="dark"] .bar{color:#0F1714}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bar{color:#0F1714}}
+.bar b{font-family:var(--display);font-size:17px;font-weight:700}
+.bar small{opacity:.85;font-size:12px}
+.screen{padding:16px;display:flex;flex-direction:column;gap:14px;min-height:560px}
+h2{font-family:var(--display);font-size:20px;line-height:1.2;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-size:16px;margin:0}
+p{margin:0}
+.muted{color:var(--ink-2);font-size:13px}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+.card{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--paper)}
+.reel{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center}
+.thumb{width:64px;height:84px;border-radius:10px;background:linear-gradient(160deg,#2E6B57,#9CC9B4 55%,#F2D08A);position:relative;overflow:hidden}
+.thumb::after{content:"";position:absolute;left:24px;top:32px;border-left:16px solid rgba(255,255,255,.9);border-top:10px solid transparent;border-bottom:10px solid transparent}
+.checks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.chk{border-radius:10px;padding:8px 6px;text-align:center;background:var(--forest-soft)}
+.chk .v{font-family:var(--display);font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;display:block}
+.chk .k{font-size:10.5px;color:var(--ink-2);line-height:1.2;display:block}
+.chk.warn{background:var(--warn-soft)} .chk.bad{background:var(--bad-soft)} .chk.ok{background:var(--ok-soft)}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600;background:var(--forest-soft);color:var(--forest)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.sky{background:var(--sky-soft);color:var(--sky)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.between{justify-content:space-between}
+.plan{border:1.5px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;cursor:pointer;background:var(--paper);text-align:left;font:inherit;color:inherit;width:100%}
+.plan > span{width:100%;display:flex}
+.plan > span.muted{display:block}
+.plan > span.pill{width:auto;align-self:flex-start;display:inline-flex}
+.plan:hover{border-color:var(--forest)}
+.plan.sel{border-color:var(--marigold);box-shadow:0 0 0 3px var(--marigold-soft)}
+.plan .price{font-family:var(--display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+.who{display:flex;flex-wrap:wrap;gap:4px}
+button,.btn{font:inherit;font-weight:600;border-radius:12px;border:1.5px solid var(--forest);background:var(--forest);color:#fff;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+:root[data-theme="dark"] button:not(.ghost):not(.plan):not(.day):not(.seg),:root[data-theme="dark"] .btn:not(.ghost){color:#0F1714}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button:not(.ghost):not(.plan):not(.day):not(.seg),:root:not([data-theme="light"]) .btn:not(.ghost){color:#0F1714}}
+button.ghost,.btn.ghost{background:transparent;color:var(--forest)}
+button.small,.btn.small{padding:6px 10px;font-size:13px;border-radius:10px}
+button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.plan:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+button[disabled]{opacity:.45;cursor:not-allowed}
+label{font-size:13px;font-weight:600;display:flex;flex-direction:column;gap:4px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;width:100%}
+textarea{min-height:64px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .dow{font-size:10.5px;text-align:center;color:var(--ink-2);font-weight:700}
+.day{border:1.5px solid var(--line);border-radius:8px;background:var(--ok-soft);color:var(--ink);padding:6px 0;font-size:13px;font-variant-numeric:tabular-nums;cursor:pointer;position:relative}
+.day.l{background:var(--warn-soft);border-color:var(--warn)}
+.day.x{background:var(--bad-soft);border-color:var(--bad);text-decoration:line-through}
+.day.hol::after{content:"";position:absolute;top:3px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--sky)}
+.day.inplan{outline:2px solid var(--marigold);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--ink-2)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px;border:1px solid var(--line)}
+.seg{border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:7px 10px;font-weight:600;font-size:13px}
+.seg.on{border-color:var(--forest);background:var(--forest-soft);color:var(--forest)}
+.code{font-family:var(--mono);font-size:11.5px;word-break:break-all;background:var(--ground);border-radius:10px;padding:10px;border:1px dashed var(--line)}
+.steps{display:flex;gap:4px;padding:10px 16px 0;flex-wrap:wrap}
+.step{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);padding:3px 8px;border-radius:999px;background:var(--ground)}
+.step.on{background:var(--marigold-soft);color:var(--warn)}
+.member{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.member:last-child{border-bottom:0}
+.notes{display:flex;flex-direction:column;gap:16px}
+.note{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.note h3{font-size:18px}
+.note ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.force{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.force div{border-radius:12px;padding:10px;background:var(--ground);font-size:13px}
+.force b{display:block;font-family:var(--display);font-size:14px}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.tbl td,.tbl th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.scroll{overflow-x:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:14px;z-index:5}
+footer{margin-top:28px;font-size:12.5px;color:var(--ink-2);max-width:900px}
+.lock{background:var(--ok-soft);border:1.5px solid var(--ok);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
+@media (prefers-reduced-motion:no-preference){.plan,.day,button{transition:border-color .15s,background .15s,box-shadow .15s}}
+@media (max-width:430px){.checks{grid-template-columns:repeat(3,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <h1 class="brand">Group Trip <span>Card</span></h1>
+    <p class="tag">A Myra Groups concept prototype. Share a reel, gather everyone's constraints privately, get three workable plans.</p>
+  </div>
+  <div class="stage">
+    <section class="phone" aria-live="polite">
+      <div class="bar"><b id="barTitle">Group Trip Card</b><small id="barSub">Concept prototype</small></div>
+      <div class="steps" id="steps"></div>
+      <div class="screen" id="app"></div>
+    </section>
+    <aside class="notes" id="notes"></aside>
+  </div>
+  <footer>
+    Student case-competition prototype for MMT Young Turks Season 4 (Case 01, From Reel to Real Trip). It is not a MakeMyTrip product and is not connected to MakeMyTrip, WhatsApp or Instagram. No booking, hold or payment happens here. Prices are illustrative estimates, not live fares. Everything you enter stays in this browser; response codes are encoded, not encrypted, so the budget-privacy promise is a design rule the real product enforces on the server.
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- constants ---------- */
+const APP_URL = "https://claude.ai/artifact/KdzCuqPjyd5NUSN1BEnNDs"; // invite links carry this address; the trip rides in the anchor
+const DEST = {
+  meghalaya:{name:"Meghalaya",gateway:"Guwahati (GAU)",best:"October to May",caution:"Very heavy rain June to September",stay:1800,local:1500,
+    outline:["Guwahati to Shillong, Umiam Lake","Sohra (Cherrapunji): Nohkalikai Falls, living root bridge trek","Dawki and Mawlynnong, back to Guwahati"]},
+  goa:{name:"Goa",gateway:"Goa (GOI or GOX)",best:"November to February",caution:"Monsoon June to September",stay:2200,local:1400,
+    outline:["North Goa beaches and Fort Aguada","Old Goa churches, Fontainhas walk","South Goa: Palolem or Cola beach"]},
+  spiti:{name:"Spiti Valley",gateway:"Chandigarh (IXC), then road",best:"June to September",caution:"Road access depends on weather",stay:1500,local:2500,
+    outline:["Drive to Kaza via Kinnaur","Key Monastery, Kibber, Chicham bridge","Langza and Hikkim, back towards Chandigarh"]},
+  coorg:{name:"Coorg",gateway:"Mangaluru (IXE) or Bengaluru, then road",best:"October to March",caution:"Heavy monsoon June to August",stay:2000,local:1200,
+    outline:["Madikeri, Raja's Seat","Coffee estate walk, Abbey Falls","Dubare and Namdroling Monastery"]},
+  udaipur:{name:"Udaipur",gateway:"Udaipur (UDR)",best:"October to March",caution:"Hot April to June",stay:2400,local:1300,
+    outline:["City Palace, Lake Pichola boat","Sajjangarh at sunset, Bagore ki Haveli","Day trip to Kumbhalgarh"]},
+  varkala:{name:"Varkala",gateway:"Thiruvananthapuram (TRV)",best:"November to March",caution:"Monsoon June to September",stay:1900,local:1100,
+    outline:["North Cliff and beach","Kappil backwaters","Jatayu Earth's Center or Ponmudi"]}
+};
+// Illustrative round-trip fare to each gateway, INR. Not live prices.
+const FARE = {
+  meghalaya:{Bengaluru:11000,Pune:12000,Delhi:10000,Mumbai:12000,Hyderabad:11000,Chennai:11000,Kolkata:6000,Other:12000},
+  goa:{Bengaluru:6000,Pune:5000,Delhi:9000,Mumbai:4500,Hyderabad:6000,Chennai:7000,Kolkata:10000,Other:9000},
+  spiti:{Bengaluru:12000,Pune:11000,Delhi:3000,Mumbai:11000,Hyderabad:12000,Chennai:13000,Kolkata:12000,Other:11000},
+  coorg:{Bengaluru:2000,Pune:7000,Delhi:11000,Mumbai:7000,Hyderabad:7000,Chennai:4000,Kolkata:12000,Other:9000},
+  udaipur:{Bengaluru:10000,Pune:7000,Delhi:6000,Mumbai:6000,Hyderabad:9000,Chennai:11000,Kolkata:11000,Other:9000},
+  varkala:{Bengaluru:6000,Pune:10000,Delhi:13000,Mumbai:9000,Hyderabad:8000,Chennai:5000,Kolkata:13000,Other:10000}
+};
+const ORIGINS = ["Bengaluru","Delhi","Mumbai","Pune","Hyderabad","Chennai","Kolkata","Other"];
+const BUDGETS = [["u10","Under Rs 10,000",10000],["10","Rs 10,000 to 19,999",19999],["20","Rs 20,000 to 34,999",34999],["35","Rs 35,000 to 49,999",49999],["50","Rs 50,000 or more",Infinity]];
+const HOLIDAYS = ["01-26","08-15","10-02","12-25"]; // fixed-date national holidays
+const PEAK = [["12-19","01-03"]]; // illustrative peak, prices x1.3
+const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+/* ---------- small helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const inr = n => "Rs " + Math.round(n).toLocaleString("en-IN");
+function parseISO(s){ const [y,m,d] = s.split("-").map(Number); return new Date(Date.UTC(y,m-1,d)); }
+function addDays(s,n){ const d = parseISO(s); d.setUTCDate(d.getUTCDate()+n); return d; }
+function fmt(d){ return DOW[d.getUTCDay()] + " " + d.getUTCDate() + " " + MON[d.getUTCMonth()]; }
+function mmdd(d){ return String(d.getUTCMonth()+1).padStart(2,"0") + "-" + String(d.getUTCDate()).padStart(2,"0"); }
+function isHol(d){ return HOLIDAYS.includes(mmdd(d)); }
+function isWknd(d){ const w = d.getUTCDay(); return w === 0 || w === 6; }
+function inPeak(d){ const k = mmdd(d); return PEAK.some(([a,b]) => a <= b ? (k >= a && k <= b) : (k >= a || k <= b)); }
+function b64e(obj){ const bytes = new TextEncoder().encode(JSON.stringify(obj)); let bin = ""; bytes.forEach(b => bin += String.fromCharCode(b)); return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+function b64d(str){ let s = str.replace(/-/g,"+").replace(/_/g,"/"); while (s.length % 4) s += "="; const bin = atob(s); const bytes = Uint8Array.from(bin, c => c.charCodeAt(0)); return JSON.parse(new TextDecoder().decode(bytes)); }
+function store(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function load(k){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+function toast(msg){ const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); }
+function copy(text){
+  const done = () => toast("Copied");
+  try{ navigator.clipboard.writeText(text).then(done, () => fallback()); }catch(e){ fallback(); }
+  function fallback(){ const ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); let ok=false; try{ ok = document.execCommand("copy"); }catch(e){} ta.remove(); toast(ok ? "Copied" : "Select the text and copy it"); }
+}
+const wa = text => "https://wa.me/?text=" + encodeURIComponent(text);
+
+/* ---------- pricing and resolver ---------- */
+function price(trip, origin, s, nights){
+  const d0 = addDays(trip.start, s); const f = inPeak(d0) ? 1.3 : 1;
+  const D = DEST[trip.dest]; const fare = (FARE[trip.dest][origin] || FARE[trip.dest].Other) * f;
+  return Math.round(D.stay * f * nights + D.local * (nights+1) + fare);
+}
+function budgetMax(code){ const b = BUDGETS.find(x => x[0] === code); return b ? b[2] : Infinity; }
+function evalWindow(trip, resp, s, nights){
+  const len = nights + 1; if (s < 0 || s + len > trip.days) return null;
+  const fit = [], out = []; let leave = 0;
+  for (const n of Object.keys(resp)){
+    const a = resp[n].a; let block = -1, l = 0;
+    for (let i = s; i < s + len; i++){ if (a[i] === "x"){ block = i; break; } if (a[i] === "l") l++; }
+    if (block >= 0) out.push({n, day:block});
+    else { const p = price(trip, resp[n].o, s, nights); fit.push({n, leave:l, p, over: p > budgetMax(resp[n].b)}); leave += l; }
+  }
+  const ok = fit.filter(f => !f.over);
+  const avg = fit.length ? fit.reduce((t,f) => t + f.p, 0) / fit.length : 0;
+  return {s, nights, fit, out, leave, fits: ok.length, budgetConflicts: fit.length - ok.length, avg};
+}
+function resolve(trip, resp){
+  const L = trip.nights;
+  const full = [], short = [];
+  for (let s = 0; s < trip.days; s++){ const a = evalWindow(trip, resp, s, L); if (a) full.push(a); if (L >= 2){ const b = evalWindow(trip, resp, s, L-1); if (b) short.push(b); } }
+  const byLeave = (a,b) => b.fits - a.fits || a.leave - b.leave || a.avg - b.avg || a.s - b.s;
+  const byPrice = (a,b) => b.fits - a.fits || a.avg - b.avg || a.leave - b.leave || a.s - b.s;
+  const plans = [];
+  const p1 = full.slice().sort(byLeave)[0]; if (p1 && p1.fits > 0) plans.push(Object.assign({label:"Least leave"}, p1));
+  const p2 = full.filter(w => !p1 || Math.abs(w.s - p1.s) >= 2).sort(byPrice)[0];
+  if (p2 && p2.fits > 0) plans.push(Object.assign({label:"Lowest price"}, p2));
+  let p3 = short.filter(w => !plans.some(p => p.s === w.s && p.nights === w.nights)).sort(byLeave)[0];
+  if (p3 && p3.fits > 0) plans.push(Object.assign({label:"Shorter trip"}, p3));
+  else { const alt = full.filter(w => !plans.some(p => Math.abs(p.s - w.s) < 2)).sort(byLeave)[0]; if (alt && alt.fits > 0) plans.push(Object.assign({label:"Other dates"}, alt)); }
+  return plans;
+}
+
+/* ---------- demo data (Naina's Meghalaya reel) ---------- */
+function demoTrip(){
+  return {v:1, id:"demo-meghalaya", dest:"meghalaya", owner:"Naina", members:["Naina","Rohan","Kabir","Meera","Aditi"],
+    nights:3, start:"2026-12-04", days:31, quorum:4, pref:7, reel:"https://www.instagram.com/reel/example-meghalaya"};
+}
+function demoResponses(trip){
+  const mk = rule => { let s = ""; for (let i = 0; i < trip.days; i++){ s += rule(addDays(trip.start, i), i); } return s; };
+  const iso = d => d.toISOString().slice(0,10);
+  return {
+    Naina:{o:"Bengaluru", b:"20", m:"Living root bridge", a: mk(d => (isWknd(d) || isHol(d)) ? "f" : "l")},
+    Rohan:{o:"Pune", b:"20", m:"", a: mk(d => isHol(d) || isWknd(d) ? "f" : (d.getUTCDay() === 5 ? "x" : "l"))},
+    Kabir:{o:"Delhi", b:"35", m:"Dawki boat ride", a: mk(d => { const k = iso(d); return (k >= "2026-12-07" && k <= "2026-12-10") ? "x" : "f"; })},
+    Meera:{o:"Bengaluru", b:"20", m:"", a: mk(d => { const k = iso(d); if (k >= "2026-12-28" && k <= "2027-01-01") return "x"; return (isWknd(d) || isHol(d)) ? "f" : "l"; })}
+  };
+}
+
+/* ---------- state ---------- */
+let S;
+function fresh(trip, resp, mode){ return {mode, trip, resp: resp || {}, view:"board", sel:null, commits:{}, held:false, log:[], nudged:{}}; }
+function save(){ if (S && S.trip) store("gtc:" + S.trip.id, S); store("gtc:last", S && S.trip ? S.trip.id : null); }
+function log(ev, detail){ S.log.push({t:new Date().toISOString(), ev, detail: detail || ""}); }
+
+/* ---------- rendering ---------- */
+const STEPS = [["reel","Reel"],["board","Plans"],["commit","Commit"],["hold","Hold"]];
+function setSteps(active){
+  $("#steps").innerHTML = STEPS.map(([k,l]) => `<span class="step ${k===active?"on":""}">${l}</span>`).join("");
+}
+function render(){
+  const v = S.view;
+  if (v === "home") return renderHome();
+  if (v === "reel") return renderReel();
+  if (v === "setup") return renderSetup();
+  if (v === "friend") return renderFriend();
+  if (v === "board") return renderBoard();
+  if (v === "commit") return renderCommit();
+  if (v === "hold") return renderHold();
+}
+function bar(title, sub){ $("#barTitle").textContent = title; $("#barSub").textContent = sub; }
+
+function renderHome(){
+  bar("Group Trip Card", "Start from a reel"); setSteps("reel");
+  $("#app").innerHTML = `
+    <h2>Turn a travel reel into a trip your friends actually take</h2>
+    <p class="muted">Share the reel, send one link to your group, and let everyone add dates and budget privately. You get three workable plans instead of a thread that drifts.</p>
+    <button id="goDemo">Open the demo: Naina's Meghalaya reel</button>
+    <button class="ghost" id="goNew">Start a new trip from a reel</button>
+    <div class="card"><h3>Got a trip code from a friend?</h3>
+      <label for="joinCode">Paste the trip code<input id="joinCode" placeholder="Starts with T1-"></label>
+      <button class="ghost small" id="join">Open the trip</button></div>`;
+  $("#goDemo").onclick = () => { S = fresh(demoTrip(), demoResponses(demoTrip()), "demo"); log("demo_opened"); save(); render(); notes(); };
+  $("#goNew").onclick = () => { S = {mode:"live", view:"reel", trip:null, resp:{}, sel:null, commits:{}, held:false, log:[], nudged:{}}; render(); notes(); };
+  $("#join").onclick = () => { const c = $("#joinCode").value.trim().replace(/^.*#/,""); openTripCode(c) || toast("That code did not open a trip. Check it was copied in full."); };
+}
+
+function renderReel(){
+  bar("New trip", "Step 1 of 2"); setSteps("reel");
+  const opts = Object.entries(DEST).map(([k,d]) => `<option value="${k}">${esc(d.name)}</option>`).join("");
+  $("#app").innerHTML = `
+    <h2>Share the reel that started it</h2>
+    <label for="reelUrl">Reel or post link<input id="reelUrl" placeholder="https://www.instagram.com/reel/..."></label>
+    <label for="destSel">Where is it? <span class="muted">(the product reads the reel; here you pick the place)</span><select id="destSel">${opts}</select></label>
+    <div class="card" id="gist"></div>
+    <button id="toSetup">Plan this with friends</button>
+    <button class="ghost small" id="back">Back</button>`;
+  const upd = () => { const k = $("#destSel").value; const D = DEST[k];
+    const prices = ORIGINS.map(o => price({dest:k,start:"2027-02-01"}, o, 0, 3));
+    $("#gist").innerHTML = `<div class="reel"><div class="thumb" aria-hidden="true"></div><div><p class="eyebrow">Gist from the reel</p><h3>${esc(D.name)}</h3>
+      <p class="muted">Best months: ${esc(D.best)}. ${esc(D.caution)}.</p></div></div>
+      <p><b>About ${inr(Math.min(...prices))} to ${inr(Math.max(...prices))}</b> per head for 3 nights, by home city, off-peak <span class="muted">(illustrative)</span></p>
+      <p class="muted">Fly into ${esc(D.gateway)}. ${D.outline.map((o,i)=>"Day "+(i+1)+": "+esc(o)).join(". ")}.</p>`; };
+  $("#destSel").onchange = upd; upd();
+  $("#back").onclick = () => { S.view = "home"; render(); notes(); };
+  $("#toSetup").onclick = () => { S.draft = {dest:$("#destSel").value, reel:$("#reelUrl").value.trim()}; S.view = "setup"; render(); notes(); };
+}
+
+function renderSetup(){
+  bar("New trip", "Step 2 of 2"); setSteps("reel");
+  const today = new Date(); const t = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()+14));
+  $("#app").innerHTML = `
+    <h2>Who's coming?</h2>
+    <label for="owner">Your first name<input id="owner" maxlength="20" placeholder="Naina"></label>
+    <label for="friends">Friends' first names, comma separated<input id="friends" maxlength="120" placeholder="Rohan, Kabir, Meera, Aditi"></label>
+    <div class="grid2">
+      <label for="nights">Nights<select id="nights">${[1,2,3,4,5,6].map(n=>`<option ${n===3?"selected":""}>${n}</option>`).join("")}</select></label>
+      <label for="quorum">Go ahead when this many say yes<input id="quorum" type="number" min="2" max="12" value="4"></label>
+      <label for="start">Dates open from<input id="start" type="date" value="${t.toISOString().slice(0,10)}"></label>
+      <label for="days">For how long<select id="days"><option value="14">2 weeks</option><option value="21">3 weeks</option><option value="31" selected>A month</option></select></label>
+    </div>
+    <label for="pref">Your first idea for a start date (optional)<input id="pref" type="date"></label>
+    <button id="create">Create the group trip card</button>
+    <button class="ghost small" id="back">Back</button>`;
+  $("#back").onclick = () => { S.view = "reel"; render(); notes(); };
+  $("#create").onclick = () => {
+    const owner = $("#owner").value.trim(); const friends = $("#friends").value.split(",").map(s=>s.trim()).filter(Boolean);
+    const names = [owner, ...friends]; const uniq = new Set(names.map(n=>n.toLowerCase()));
+    if (!owner || friends.length < 1) return toast("Add your name and at least one friend.");
+    if (uniq.size !== names.length) return toast("Each person needs a different name.");
+    const start = $("#start").value; if (!start) return toast("Pick the first open date.");
+    const days = Number($("#days").value); const q = Math.max(2, Math.min(names.length, Number($("#quorum").value) || 2));
+    let pref = null; const pv = $("#pref").value; if (pv){ const diff = Math.round((parseISO(pv) - parseISO(start))/864e5); if (diff >= 0 && diff < days) pref = diff; }
+    const trip = {v:1, id: "t" + Date.now().toString(36), dest:S.draft.dest, owner, members:names, nights:Number($("#nights").value), start, days, quorum:q, pref, reel:S.draft.reel};
+    S = fresh(trip, {}, "live"); log("trip_created", names.length + " people"); save(); render(); notes();
+  };
+}
+
+function tripCode(){ return "T1-" + b64e(S.trip); }
+function inviteText(){
+  const D = DEST[S.trip.dest]; const link = APP_URL ? APP_URL + "#" + tripCode().replace("T1-","t") : "";
+  return `${S.trip.owner} started a ${S.trip.nights}-night ${D.name} trip card. Add your dates and budget privately (2 minutes, nothing to install).` + (link ? `\n${link}` : "") + `\nOr paste this trip code into Group Trip Card: ${tripCode()}`;
+}
+function openTripCode(c){
+  try{
+    let raw = c; if (raw.startsWith("t") && !raw.startsWith("T1-")) raw = raw.slice(1); else raw = raw.replace(/^T1-/,"");
+    const trip = b64d(raw); if (!trip || !trip.members || !DEST[trip.dest]) return false;
+    const prior = load("gtc:" + trip.id);
+    S = prior && prior.trip ? prior : fresh(trip, {}, "friend");
+    S.view = "friend"; S.fdraft = null; render(); notes(); return true;
+  }catch(e){ return false; }
+}
+
+function calendar(trip, avail, clickable, planRange){
+  const d0 = parseISO(trip.start); const lead = (d0.getUTCDay() + 6) % 7; // Monday first
+  let h = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(x=>`<div class="dow">${x}</div>`).join("");
+  for (let i = 0; i < lead; i++) h += "<div></div>";
+  for (let i = 0; i < trip.days; i++){
+    const d = addDays(trip.start, i); const c = avail[i] || "f";
+    const inP = planRange && i >= planRange[0] && i <= planRange[1];
+    const lab = fmt(d) + ", " + (c==="x"?"can't":c==="l"?"needs leave":"free") + (isHol(d)?", holiday":"");
+    h += `<button type="button" class="day ${c==="f"?"":c} ${isHol(d)?"hol":""} ${inP?"inplan":""}" data-i="${i}" aria-label="${esc(lab)}" ${clickable?"":"tabindex='-1'"}>${d.getUTCDate()}</button>`;
+  }
+  return `<div class="cal">${h}</div><div class="legend"><span><i class="sw" style="background:var(--ok-soft)"></i>Free</span><span><i class="sw" style="background:var(--warn-soft)"></i>Needs leave</span><span><i class="sw" style="background:var(--bad-soft)"></i>Can't</span><span><i class="sw" style="background:var(--sky)"></i>Holiday</span></div>`;
+}
+
+function renderFriend(){
+  const T = S.trip; const D = DEST[T.dest];
+  bar(D.name + " with " + T.owner, "Your answers are private"); setSteps("board");
+  if (!S.fdraft){ S.fdraft = {name:"", o:"Bengaluru", b:"", m:"", ok:true, a: Array.from({length:T.days}, () => "f").join("")}; }
+  const F = S.fdraft; const others = T.members.filter(n => n !== T.owner);
+  $("#app").innerHTML = `
+    <h2>${esc(T.owner)} wants to do ${esc(D.name)}, ${T.nights} nights</h2>
+    <p class="muted">Tap a day once if you would need leave, twice if you can't go. Only Myra sees your budget; the group sees whether a plan fits.</p>
+    <div class="row">${others.map(n=>`<button type="button" class="seg ${F.name===n?"on":""}" data-name="${esc(n)}">${esc(n)}</button>`).join("")}</div>
+    <div class="grid2">
+      <label for="origin">Travelling from<select id="origin">${ORIGINS.map(o=>`<option ${o===F.o?"selected":""}>${o}</option>`).join("")}</select></label>
+      <label for="budget">Most you'd spend, all in<select id="budget"><option value="">Choose</option>${BUDGETS.map(b=>`<option value="${b[0]}" ${b[0]===F.b?"selected":""}>${b[1]}</option>`).join("")}</select></label>
+    </div>
+    <div id="cal">${calendar(T, F.a, true)}</div>
+    <label for="must">One thing you'd love to do (optional)<input id="must" maxlength="60" value="${esc(F.m)}"></label>
+    <label style="flex-direction:row;align-items:center;gap:8px;font-weight:500"><input id="consent" type="checkbox" style="width:auto" ${F.ok?"checked":""}> One reminder at most, only when the group is waiting on me</label>
+    <button id="send">Send my answers</button>
+    <div id="codeOut"></div>`;
+  document.querySelectorAll("[data-name]").forEach(b => b.onclick = () => { F.name = b.dataset.name; renderFriend(); });
+  $("#cal").onclick = e => { const b = e.target.closest(".day"); if (!b) return; const i = Number(b.dataset.i); const cyc = {f:"l", l:"x", x:"f"}; const arr = F.a.split(""); arr[i] = cyc[arr[i]]; F.a = arr.join(""); F.o = $("#origin").value; F.b = $("#budget").value; F.m = $("#must").value; $("#cal").innerHTML = calendar(T, F.a, true); };
+  $("#send").onclick = () => {
+    F.o = $("#origin").value; F.b = $("#budget").value; F.m = $("#must").value.trim(); F.ok = $("#consent").checked;
+    if (!F.name) return toast("Tap your name first.");
+    if (!F.b) return toast("Pick a budget band. Only Myra sees it.");
+    const r = {id:T.id, n:F.name, o:F.o, b:F.b, m:F.m, a:F.a, c:F.ok};
+    if (S.mode === "demo" || S.mode === "live"){ // same device: add straight to the board
+      S.resp[F.name] = {o:r.o, b:r.b, m:r.m, a:r.a, c:r.c}; log("response_added", F.name); S.view = "board"; S.fdraft = null; save(); render(); notes(); toast(F.name + "'s answers added"); return;
+    }
+    const code = "R1-" + b64e(r);
+    $("#codeOut").innerHTML = `<div class="card"><h3>Send this code to ${esc(T.owner)}</h3><div class="code" id="rc">${esc(code)}</div>
+      <div class="row"><button class="small" id="cp">Copy code</button><a class="btn ghost small" target="_blank" rel="noopener" href="${esc(wa("My dates for " + D.name + ": " + code))}">Open WhatsApp</a></div></div>`;
+    $("#cp").onclick = () => copy(code);
+  };
+}
+
+function trueState(plans){
+  const T = S.trip, names = T.members, got = names.filter(n => S.resp[n]);
+  const best = plans[0];
+  let conflict = "None", nConf = 0;
+  if (T.pref != null){
+    const len = T.nights + 1; const hit = [];
+    got.forEach(n => { const a = S.resp[n].a; for (let i = T.pref; i < Math.min(T.days, T.pref + len); i++){ if (a[i] === "x"){ hit.push(n + ": can't do " + fmt(addDays(T.start,i))); break; } } });
+    nConf = hit.length; if (hit.length) conflict = hit[0] + (hit.length > 1 ? " (+" + (hit.length-1) + ")" : "");
+  } else if (best && best.out.length){ nConf = best.out.length; conflict = best.out[0].n + ": can't do " + fmt(addDays(T.start, best.out[0].day)); }
+  const sel = S.sel != null ? plans[S.sel] : null;
+  const yes = sel ? Object.values(S.commits).filter(v => v === "in").length : 0;
+  return {got, conflict, nConf, best, yes};
+}
+
+function planCard(p, i){
+  const T = S.trip; const a = addDays(T.start, p.s), b = addDays(T.start, p.s + p.nights);
+  const ins = p.fit.filter(f => !f.over).map(f => `<span class="pill ok">${esc(f.n)}</span>`).join("");
+  const outs = p.out.map(o => `<span class="pill bad">${esc(o.n)}: ${esc(fmt(addDays(T.start,o.day)))}</span>`).join("");
+  const silent = T.members.filter(n => !S.resp[n]).map(n => `<span class="pill">${esc(n)}: no reply yet</span>`).join("");
+  const perOrigin = {}; p.fit.forEach(f => { const o = S.resp[f.n].o; perOrigin[o] = f.p; });
+  return `<button type="button" class="plan ${S.sel===i?"sel":""}" data-plan="${i}">
+    <span class="row between"><span class="pill sky">${esc(p.label)}</span><span class="muted">${p.nights} night${p.nights>1?"s":""}${inPeak(a)?", peak dates":""}</span></span>
+    <span class="row between"><b>${fmt(a)} to ${fmt(b)}</b><span class="price">${inr(p.avg)}</span></span>
+    <span class="muted">Leave needed: ${p.leave} day${p.leave===1?"":"s"} across the group. Per head by city: ${Object.entries(perOrigin).map(([o,v]) => esc(o) + " " + inr(v)).join(", ")}</span>
+    <span class="who">${ins}${outs}${silent}</span>
+    ${p.budgetConflicts ? `<span class="pill warn">Above ${p.budgetConflicts} person's budget</span>` : ""}
+  </button>`;
+}
+
+function renderBoard(){
+  const T = S.trip, D = DEST[T.dest];
+  bar(D.name + " trip card", T.owner + "'s group, " + T.members.length + " people"); setSteps("board");
+  const plans = Object.keys(S.resp).length ? resolve(T, S.resp) : [];
+  if (plans.length && !S.log.some(l => l.ev === "plans_shown")) { log("plans_shown", plans.length + " plans from " + Object.keys(S.resp).length + " replies"); save(); }
+  const st = trueState(plans);
+  const silent = T.members.filter(n => !S.resp[n]);
+  const selPlan = S.sel != null ? plans[S.sel] : null;
+  $("#app").innerHTML = `
+    <div class="card"><div class="reel"><div class="thumb" aria-hidden="true"></div><div><p class="eyebrow">Started from a reel</p><h3>${esc(D.name)}, ${T.nights} nights</h3>
+      <p class="muted">Dates open ${fmt(addDays(T.start,0))} to ${fmt(addDays(T.start,T.days-1))}. Go ahead at ${T.quorum} yeses.</p></div></div></div>
+    <div class="checks">
+      <div class="chk ${st.got.length===T.members.length?"ok":"warn"}"><span class="v">${st.got.length}/${T.members.length}</span><span class="k">Replied</span></div>
+      <div class="chk ${st.best?"ok":"bad"}"><span class="v">${st.best ? st.best.fits + "/" + st.got.length : "No"}</span><span class="k">Fit best plan</span></div>
+      <div class="chk ${st.conflict==="None"?"ok":"bad"}"><span class="v">${st.nConf}</span><span class="k">Blocking conflict</span></div>
+      <div class="chk ${selPlan && st.yes>=T.quorum?"ok":"warn"}"><span class="v">${st.yes}/${T.quorum}</span><span class="k">Said I'm in</span></div>
+      <div class="chk ${S.held?"ok":"warn"}"><span class="v">${S.held?"Yes":"No"}</span><span class="k">Held</span></div>
+    </div>
+    ${st.conflict!=="None" ? `<p class="pill bad" style="align-self:flex-start">${esc(st.conflict)}${T.pref!=null?" (your first idea)":""}</p>` : ""}
+    ${silent.length ? `<div class="card"><h3>Waiting on ${silent.map(esc).join(", ")}</h3><p class="muted">A reminder fixes silence. It can't fix a clash, so plans below work around clashes instead.</p>
+      <div class="row">${silent.map(n => `<button class="small ghost" data-nudge="${esc(n)}" ${S.nudged[n]?"disabled":""}>${S.nudged[n]?"Reminded today":"Remind "+esc(n)}</button>`).join("")}</div></div>` : ""}
+    <h2>${plans.length ? "Three plans that work" : "Waiting for replies"}</h2>
+    ${plans.length ? plans.map(planCard).join("") : `<p class="muted">Plans appear as soon as one friend replies. Share the invite below.</p>`}
+    ${plans.length ? `<button id="toCommit" ${S.sel==null?"disabled":""}>Ask the group: I'm in?</button>` : ""}
+    ${S.mode!=="friend" ? `<div class="card"><h3>Invite and collect answers</h3>
+      <p class="muted">Post this once in your group's own WhatsApp chat. Friends answer on their phones and send you a code, or answer here on this device.</p>
+      <div class="row"><button class="small" id="copyInv">Copy invite</button><a class="btn ghost small" target="_blank" rel="noopener" href="${esc(wa(inviteText()))}">Open WhatsApp</a><button class="small ghost" id="asFriend">Answer as a friend here</button></div>
+      <label for="paste">Paste a friend's code<textarea id="paste" placeholder="R1-..."></textarea></label><button class="small ghost" id="addCode">Add answer</button></div>` : ""}
+    <div class="row"><button class="small ghost" id="home">Home</button>${S.mode==="demo"?`<button class="small ghost" id="reset">Reset demo</button>`:""}</div>`;
+  document.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => { S.sel = Number(b.dataset.plan); S.commits = {}; log("plan_selected", plans[S.sel].label); save(); renderBoard(); notes(); });
+  document.querySelectorAll("[data-nudge]").forEach(b => b.onclick = () => { const n = b.dataset.nudge; S.nudged[n] = true; log("reminder_sent", n); save();
+    const msg = `Hi ${n}, your group is waiting on your dates for ${D.name} (2 minutes). ` + (APP_URL ? APP_URL + "#" + tripCode().replace("T1-","t") : "Trip code: " + tripCode());
+    copy(msg); toast("Reminder text copied for " + n); renderBoard(); });
+  const tc = $("#toCommit"); if (tc) tc.onclick = () => { S.view = "commit"; save(); render(); notes(); };
+  const ci = $("#copyInv"); if (ci) ci.onclick = () => { copy(inviteText()); log("invite_copied"); save(); };
+  const af = $("#asFriend"); if (af) af.onclick = () => { S.view = "friend"; S.fdraft = null; render(); notes(); };
+  const ac = $("#addCode"); if (ac) ac.onclick = () => {
+    const raw = $("#paste").value.trim().replace(/^.*?(R1-[A-Za-z0-9_-]+).*$/s, "$1");
+    try{ const r = b64d(raw.replace(/^R1-/,"")); if (r.id !== T.id) return toast("That code is for a different trip.");
+      if (!T.members.includes(r.n)) return toast("That name is not on this trip card.");
+      if (!r.a || r.a.length !== T.days) return toast("That code is incomplete. Ask for it again.");
+      S.resp[r.n] = {o:r.o, b:r.b, m:r.m, a:r.a, c:r.c}; log("response_added", r.n); save(); renderBoard(); notes(); toast(r.n + "'s answers added");
+    }catch(e){ toast("That code did not read. Check it was copied in full."); } };
+  $("#home").onclick = () => { S.view = "home"; render(); notes(); };
+  const rs = $("#reset"); if (rs) rs.onclick = () => { S = fresh(demoTrip(), demoResponses(demoTrip()), "demo"); log("demo_opened"); save(); render(); notes(); toast("Demo reset"); };
+}
+
+function renderCommit(){
+  const T = S.trip, D = DEST[T.dest]; const plans = resolve(T, S.resp); const p = plans[S.sel];
+  if (!p){ S.view = "board"; return render(); }
+  bar("Who's in?", p.label + " plan"); setSteps("commit");
+  const a = addDays(T.start, p.s), b = addDays(T.start, p.s + p.nights);
+  const people = T.members; const yes = people.filter(n => S.commits[n] === "in").length; const locked = yes >= T.quorum;
+  if (locked && !S.log.some(l => l.ev === "quorum_reached")){ log("quorum_reached", yes + " yes"); save(); }
+  $("#app").innerHTML = `
+    <h2>${fmt(a)} to ${fmt(b)}, ${esc(D.name)}</h2>
+    <p class="muted">Everyone gives a clear yes or no by the deadline. A clean no is progress: the plan shrinks instead of drifting.</p>
+    <div class="card">${people.map(n => { const fits = p.fit.find(f => f.n===n && !f.over); const c = S.commits[n];
+      return `<div class="member"><span><b>${esc(n)}</b> <span class="muted">${fits ? "fits these dates" : S.resp[n] ? "clashes with these dates" : "no reply yet"}</span></span>
+      <span class="row"><button class="small ${c==="in"?"":"ghost"}" data-c="${esc(n)}" data-v="in">I'm in</button><button class="small ${c==="out"?"":"ghost"}" data-c="${esc(n)}" data-v="out">I'm out</button></span></div>`; }).join("")}</div>
+    <div class="${locked ? "lock" : "card"}"><b>${yes} of ${T.quorum} needed said I'm in</b><span class="muted">${locked ? "Quorum met. The plan is locked; hold it before prices move." : "The plan locks when " + T.quorum + " people say yes."}</span></div>
+    <button id="toHold" ${locked?"":"disabled"}>Hold this plan</button>
+    <button class="ghost small" id="back">Back to plans</button>`;
+  document.querySelectorAll("[data-c]").forEach(bn => bn.onclick = () => { const n = bn.dataset.c, v = bn.dataset.v; S.commits[n] = v; log("commit", n + " " + v); save(); renderCommit(); notes(); });
+  $("#toHold").onclick = () => { S.view = "hold"; save(); render(); notes(); };
+  $("#back").onclick = () => { S.view = "board"; render(); notes(); };
+}
+
+function renderHold(){
+  const T = S.trip, D = DEST[T.dest]; const plans = resolve(T, S.resp); const p = plans[S.sel];
+  if (!p){ S.view = "board"; return render(); }
+  bar("Hold and book", D.name); setSteps("hold");
+  const a = addDays(T.start, p.s), b = addDays(T.start, p.s + p.nights);
+  const goers = T.members.filter(n => S.commits[n] === "in");
+  const rows = goers.map(n => { const r = S.resp[n]; return r ? {n, o:r.o, p:price(T, r.o, p.s, p.nights)} : {n, o:"Not given", p:null}; });
+  const total = rows.reduce((t,r) => t + (r.p || 0), 0);
+  $("#app").innerHTML = `
+    <h2>Hold it for ${goers.length}: ${fmt(a)} to ${fmt(b)}</h2>
+    <div class="card"><h3>What gets held on MakeMyTrip</h3>
+      <p><b>Stays:</b> Book with Zero Payment, which lets a stay be reserved with no upfront payment until 24 hours before check-in.</p>
+      <p><b>Flights:</b> Price Lock, which secures a fare for later booking, one lock per home city.</p>
+      <p class="muted">Holds only where MakeMyTrip already offers them for that inventory. In this MVP, ${esc(T.owner)} pays for everyone and friends settle with her directly.</p></div>
+    <div class="scroll"><table class="tbl"><thead><tr><th>Traveller</th><th>From</th><th>Estimate</th></tr></thead><tbody>
+      ${rows.map(r => `<tr><td>${esc(r.n)}</td><td>${esc(r.o)}</td><td>${r.p ? inr(r.p) : "Ask for dates"}</td></tr>`).join("")}
+      <tr><td><b>Group total</b></td><td></td><td><b>${inr(total)}</b></td></tr></tbody></table></div>
+    <p class="muted">Estimates are illustrative. A concierge replaces them with live MakeMyTrip prices before the hold.</p>
+    ${S.held ? `<div class="lock"><b>Held</b><span class="muted">Recorded in the test log. After the trip, share a recap and start the next one with the same group.</span></div>` : `<button id="held">Mark as held</button>`}
+    <a class="btn ghost" href="https://www.makemytrip.com/" target="_blank" rel="noopener">Open MakeMyTrip to hold</a>
+    <button class="ghost small" id="again">Copy this trip for the next reel</button>
+    <button class="ghost small" id="back">Back</button>`;
+  const h = $("#held"); if (h) h.onclick = () => { S.held = true; log("held", goers.length + " travellers, " + inr(total)); save(); renderHold(); notes(); };
+  $("#again").onclick = () => { S = {mode:"live", view:"reel", trip:null, resp:{}, sel:null, commits:{}, held:false, log:[], nudged:{}, draft:null}; render(); notes(); toast("Same group, new reel"); };
+  $("#back").onclick = () => { S.view = "commit"; render(); notes(); };
+}
+
+/* ---------- side panel: why each step exists ---------- */
+function notes(){
+  const v = S ? S.view : "home";
+  const why = {
+    home:["Why this exists","In our survey, 27 of 40 people could name a friend trip that died. 24 of those 27 died before anyone started a booking, and 17 of 27 died on coordination: dates, people dropping out, or nobody taking charge."],
+    reel:["Pull: the reel","The reel supplies the urge to go. The card keeps that urge alive after the scroll, so the idea does not vanish into a saved folder."],
+    setup:["Habit: one owner","One person starts the card and owns the next step. In our survey, 15 of 27 dead trips had no single owner."],
+    friend:["Anxiety: private answers","Each friend answers alone, in two minutes, with nothing to install. Budget stays private, so nobody has to say they can't afford it in front of the group."],
+    board:["Anxiety: three plans, not one argument","The resolver drops dates that break a hard constraint, counts leave needed, checks each person's budget band and returns three different trade-offs: least leave, lowest price, shorter trip."],
+    commit:["Habit: a clear yes or no","A quorum and a deadline turn soft interest into a decision. In our survey, 5 of 27 trips died because too few stayed willing."],
+    hold:["Close on MakeMyTrip","Holds use features MakeMyTrip already runs: Book with Zero Payment for stays and Price Lock for flights. The group cart is hotel-heavy, where MakeMyTrip's adjusted margin is 17.9% against 7.0% on air (FY26)."]
+  }[v] || ["",""];
+  const L = S && S.log ? S.log : [];
+  const first = ev => { const x = L.find(l => l.ev === ev); return x ? new Date(x.t) : null; };
+  const t0 = first("trip_created") || first("demo_opened"), tp = first("plans_shown"), tq = first("quorum_reached"), th = first("held");
+  const mins = (a,b) => a && b ? Math.max(0, Math.round((b-a)/60000)) + " min" : "not yet";
+  const csv = "time,event,detail\n" + L.map(l => [l.t, l.ev, '"' + String(l.detail).replace(/"/g,'""') + '"'].join(",")).join("\n");
+  $("#notes").innerHTML = `
+    <div class="note"><p class="eyebrow">What this screen does</p><h3>${esc(why[0])}</h3><p>${esc(why[1])}</p></div>
+    <div class="note"><p class="eyebrow">The idea in one line</p><h3>Reels create the pull. Group trips die on anxiety and habit.</h3>
+      <div class="force"><div><b>Pull</b>A reel and a place people want</div><div><b>Push</b>Wanting this group to travel together</div>
+      <div><b>Anxiety</b>Dates, leave, budget, who backs out</div><div><b>Habit</b>Nobody owns the next step; the chat drifts</div></div>
+      <p class="muted">Forces of Progress (Moesta and Spiek): a group switches when push and pull outweigh anxiety and habit. Other tools add pull. This card removes anxiety and breaks habit.</p></div>
+    <div class="note"><p class="eyebrow">Concierge test log</p><h3>${S && S.trip ? esc(DEST[S.trip.dest].name) + ", " + (S.mode==="demo"?"demo":"live test") : "No trip open"}</h3>
+      <table class="tbl"><tbody>
+        <tr><td>People on the card</td><td>${S && S.trip ? S.trip.members.length : "0"}</td></tr>
+        <tr><td>Replied</td><td>${S && S.trip ? Object.keys(S.resp).length : "0"}</td></tr>
+        <tr><td>Time to first plans</td><td>${mins(t0,tp)}</td></tr>
+        <tr><td>Time to quorum</td><td>${mins(t0,tq)}</td></tr>
+        <tr><td>Held</td><td>${th ? "yes, after " + mins(t0,th) : "not yet"}</td></tr>
+      </tbody></table>
+      <button class="small ghost" id="copyLog" ${L.length?"":"disabled"}>Copy log as CSV</button>
+      <p class="muted">Gate 0 target for the concierge phase: a workable plan within 7 days of the link going out in at least half of groups.</p></div>`;
+  const cl = $("#copyLog"); if (cl) cl.onclick = () => copy(csv);
+}
+
+/* ---------- boot ---------- */
+function boot(){
+  const h = (location.hash || "").slice(1);
+  if (h && h.startsWith("t") && openTripCode(h)) return;
+  const last = load("gtc:last"); const prior = last ? load("gtc:" + last) : null;
+  if (prior && prior.trip && DEST[prior.trip.dest]){ S = prior; if (!S.view || S.view === "friend") S.view = "board"; }
+  else { S = fresh(demoTrip(), demoResponses(demoTrip()), "demo"); S.log.push({t:new Date().toISOString(), ev:"demo_opened", detail:""}); }
+  render(); notes();
+}
+boot();
+})();
+</script>
